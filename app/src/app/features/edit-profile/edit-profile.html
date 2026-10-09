@@ -1,0 +1,57 @@
+<h1 class="title">My profile</h1>
+
+<mat-card class="card">
+  @if (saving()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+
+  <mat-card-content>
+    <div class="preview">
+      <app-avatar
+        [name]="data().fullName || 'You'"
+        [image]="data().profileImage || null"
+        [size]="64"
+      />
+
+      <div class="preview-texts">
+        <strong>{{ data().fullName }}</strong>
+        @if (data().nickname) {
+          <span class="preview-nickname">~{{ data().nickname }}</span>
+        }
+        <span class="preview-note">Email, password and birth date cannot be changed</span>
+      </div>
+    </div>
+
+    <form class="form" novalidate (submit)="save(); $event.preventDefault()">
+      <mat-form-field>
+        <mat-label>Full name</mat-label>
+        <input matInput autocomplete="name" [formField]="form.fullName" />
+        @if (form.fullName().touched() && form.fullName().errors().length) {
+          <mat-error>{{ form.fullName().errors()[0].message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Nickname</mat-label>
+        <input matInput autocomplete="nickname" [formField]="form.nickname" />
+        <mat-hint>Leave blank to remove it</mat-hint>
+        @if (form.nickname().touched() && form.nickname().errors().length) {
+          <mat-error>{{ form.nickname().errors()[0].message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Profile image URL</mat-label>
+        <input matInput type="url" [formField]="form.profileImage" />
+        <mat-hint>Leave blank to remove it</mat-hint>
+        @if (form.profileImage().touched() && form.profileImage().errors().length) {
+          <mat-error>{{ form.profileImage().errors()[0].message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="actions">
+        <button matButton="filled" type="submit" [disabled]="saving()">Save</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
+import { PendingRequests } from './core/friendship/pending-requests';
 import { Auth } from './core/auth/auth';
 import { Theme } from './core/theme/theme';
 import { Avatar } from './shared/avatar/avatar';
@@ -21,6 +22,9 @@ interface Destination {
 
 const DESTINATIONS: Destination[] = [
   { route: '/home', label: 'Feed', icon: 'dynamic_feed' },
+  { route: '/discover', label: 'Discover people', icon: 'person_search' },
+  { route: '/friends', label: 'My friends', icon: 'group' },
+  { route: '/edit-profile', label: 'My profile', icon: 'account_circle' },
 ];
 
 @Component({
@@ -46,6 +50,8 @@ export class App {
   private readonly breakpoints = inject(BreakpointObserver);
 
   protected readonly theme = inject(Theme);
+
+  protected readonly pendingRequests = inject(PendingRequests);
 
   protected readonly destinations = DESTINATIONS;
 

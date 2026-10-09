@@ -72,6 +72,21 @@
   background-color: var(--mat-sys-surface);
 }
 
+.requests-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 1rem;
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  align-self: center;
+}
 
 .drawer {
   width: 15rem;

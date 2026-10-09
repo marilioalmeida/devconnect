@@ -38,6 +38,10 @@
           <span class="account-nickname">~{{ loggedIn.nickname }}</span>
         }
       </div>
+      <a mat-menu-item routerLink="/edit-profile">
+        <mat-icon>person</mat-icon>
+        <span>My profile</span>
+      </a>
       <button mat-menu-item type="button" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Log out</span>
@@ -67,6 +71,11 @@
           >
             <mat-icon matListItemIcon>{{ destination.icon }}</mat-icon>
             <span matListItemTitle>{{ destination.label }}</span>
+            @if (destination.route === '/home' && pendingRequests.total() > 0) {
+              <span matListItemMeta class="requests-badge">
+                {{ pendingRequests.total() }}
+              </span>
+            }
           </a>
         }
       </mat-nav-list>

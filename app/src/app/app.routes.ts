@@ -21,6 +21,31 @@ export const routes: Routes = [
     canActivate: [authenticatedGuard],
     loadComponent: () => import('./features/home/home').then((m) => m.Home),
   },
+  {
+    path: 'discover',
+    title: 'Discover people | DevConnect',
+    canActivate: [authenticatedGuard],
+    loadComponent: () => import('./features/discover/discover').then((m) => m.Discover),
+  },
+  {
+    path: 'friends',
+    title: 'My friends | DevConnect',
+    canActivate: [authenticatedGuard],
+    loadComponent: () => import('./features/friends/friends').then((m) => m.Friends),
+  },
+  {
+    path: 'edit-profile',
+    title: 'My profile | DevConnect',
+    canActivate: [authenticatedGuard],
+    loadComponent: () =>
+      import('./features/edit-profile/edit-profile').then((m) => m.EditProfile),
+  },
+  {
+    path: 'profile/:id',
+    title: 'Profile | DevConnect',
+    canActivate: [authenticatedGuard],
+    loadComponent: () => import('./features/profile/profile').then((m) => m.ProfilePage),
+  },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', redirectTo: 'home' },
 ];

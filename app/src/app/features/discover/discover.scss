@@ -1,0 +1,55 @@
+.title {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 1rem;
+}
+
+.search-card {
+  margin-bottom: 1.5rem;
+}
+
+.field {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.row {
+  margin-bottom: 0.75rem;
+}
+
+.row-content {
+  padding-top: 1rem;
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--mat-sys-outline);
+}
+
+.empty-content p {
+  margin: 0;
+}
+
+.empty-detail {
+  color: var(--mat-sys-on-surface-variant);
+}

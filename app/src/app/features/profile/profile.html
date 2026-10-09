@@ -1,0 +1,141 @@
+@if (profileNotFound()) {
+  <mat-card class="empty">
+    <mat-card-content class="empty-content">
+      <mat-icon class="empty-icon">person_off</mat-icon>
+      <p><strong>Profile not found.</strong></p>
+      <p class="note">This person may have left the network.</p>
+      <a matButton="filled" routerLink="/home">Back to feed</a>
+    </mat-card-content>
+  </mat-card>
+} @else if (profile.error()) {
+  <app-load-error
+    message="Could not load the profile."
+    (retry)="profile.reload()"
+  />
+} @else if (profile.hasValue()) {
+  @let data = profile.value();
+
+  <mat-card class="header">
+    <div class="cover" [style.--hue]="hue()"></div>
+
+    <div class="body">
+      <app-avatar
+        class="photo"
+        [name]="data.fullName"
+        [image]="data.profileImage"
+        [size]="80"
+      />
+
+      <div class="titles">
+        <h1 class="name">{{ data.fullName }}</h1>
+        @if (data.nickname) {
+          <span class="nickname">~{{ data.nickname }}</span>
+        }
+        <span class="post-count">
+          {{ postCount() }}
+          {{ postCount() === 1 ? 'post' : 'posts' }}
+        </span>
+      </div>
+    </div>
+
+    <mat-card-actions class="actions">
+      @switch (status()) {
+        @case ('OWN_PROFILE') {
+          <a matButton="filled" routerLink="/edit-profile">
+            <mat-icon>edit</mat-icon>
+            Edit profile
+          </a>
+        }
+        @case ('NONE') {
+          <button matButton="filled" type="button" [disabled]="busy()" (click)="sendRequest()">
+            <mat-icon>person_add</mat-icon>
+            Add friend
+          </button>
+        }
+        @case ('REQUEST_SENT') {
+          <button matButton type="button" [disabled]="busy()" (click)="remove()">
+            <mat-icon>schedule</mat-icon>
+            Cancel request
+          </button>
+        }
+        @case ('REQUEST_RECEIVED') {
+          <button matButton="filled" type="button" [disabled]="busy()" (click)="accept()">
+            <mat-icon>how_to_reg</mat-icon>
+            Accept request
+          </button>
+          <button matButton type="button" [disabled]="busy()" (click)="remove()">
+            Decline
+          </button>
+        }
+        @case ('FRIENDS') {
+          <span class="friends-badge">
+            <mat-icon class="badge-icon">how_to_reg</mat-icon>
+            Friends
+          </span>
+          <button matButton type="button" [disabled]="busy()" (click)="remove()">
+            <mat-icon>person_remove</mat-icon>
+            Remove friend
+          </button>
+        }
+      }
+    </mat-card-actions>
+  </mat-card>
+
+  <section class="posts">
+    @if (posts.error()) {
+      <app-load-error
+        message="Could not load the posts."
+        (retry)="posts.reload()"
+      />
+    } @else {
+      @if (posts.isLoading()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
+
+      @let page = posts.value();
+
+      @for (post of page.content; track post.id) {
+        <app-post-card [post]="post" (removed)="onPostRemoved()" />
+      } @empty {
+        @if (!posts.isLoading()) {
+          <mat-card class="empty">
+            <mat-card-content class="empty-content">
+              <mat-icon class="empty-icon">forum</mat-icon>
+              @if (isOwnProfile()) {
+                <p>You haven't posted anything yet.</p>
+              } @else if (status() === 'FRIENDS') {
+                <p>{{ data.fullName }} hasn't posted anything yet.</p>
+              } @else {
+                <p>No public posts here.</p>
+                <p class="note">
+                  Private posts are only visible to friends of this person.
+                </p>
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+      }
+
+      @if (page.page.totalElements > 0) {
+        <mat-paginator
+          [length]="page.page.totalElements"
+          [pageIndex]="page.page.number"
+          [pageSize]="page.page.size"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="changePage($event)"
+        />
+      }
+    }
+  </section>
+} @else if (profile.isLoading()) {
+  <mat-card class="header loading">
+    <div class="cover cover-neutral"></div>
+    <div class="body">
+      <span class="photo-loading"></span>
+      <div class="titles">
+        <span class="loading-bar wide"></span>
+        <span class="loading-bar"></span>
+      </div>
+    </div>
+  </mat-card>
+}
