@@ -1,0 +1,145 @@
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.feed-column {
+  min-width: 0;
+}
+
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 64rem) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr) 17rem;
+  }
+
+  .feed-column {
+    order: 1;
+  }
+
+  .side-column {
+    order: 2;
+    position: sticky;
+    top: 5rem;
+  }
+}
+
+@media (max-width: 63.98rem) {
+  .mini-profile {
+    display: none;
+  }
+}
+
+.mini-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding-top: 1rem;
+}
+
+.mini-name {
+  margin-top: 0.5rem;
+  font: var(--mat-sys-title-medium);
+}
+
+.mini-nickname {
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  color: var(--mat-sys-primary);
+}
+
+.mini-email {
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-on-surface-variant);
+  overflow-wrap: anywhere;
+}
+
+.mini-content a {
+  margin-top: 0.5rem;
+}
+
+.composer-card {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+.composer-avatar {
+  margin-top: 0.25rem;
+}
+
+.composer-fields {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.post-preview {
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.preview-label {
+  display: block;
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 0.5rem;
+}
+
+.actions-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.visibility-field {
+  min-width: 14rem;
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--mat-sys-outline);
+}
+
+.empty-content p {
+  margin: 0;
+}
+
+.empty-detail {
+  color: var(--mat-sys-on-surface-variant);
+  max-width: 28rem;
+}

@@ -1,0 +1,107 @@
+<div class="page">
+  <mat-card class="card">
+    @if (submitting()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <mat-card-header>
+      <mat-card-title>Join DevConnect</mat-card-title>
+      <mat-card-subtitle>It takes less than a minute</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="form" novalidate (submit)="register(); $event.preventDefault()">
+        <mat-form-field class="full-width">
+          <mat-label>Full name</mat-label>
+          <input matInput autocomplete="name" [formField]="form.fullName" />
+          @if (form.fullName().touched() && form.fullName().errors().length) {
+            <mat-error>{{ form.fullName().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" autocomplete="email" [formField]="form.email" />
+          @if (form.email().touched() && form.email().errors().length) {
+            <mat-error>{{ form.email().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nickname</mat-label>
+          <input matInput autocomplete="nickname" [formField]="form.nickname" />
+          @if (form.nickname().touched() && form.nickname().errors().length) {
+            <mat-error>{{ form.nickname().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Birth date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="calendar"
+            [max]="yesterday"
+            [formField]="form.birthDate"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="calendar" />
+          <mat-datepicker #calendar />
+          @if (form.birthDate().touched() && form.birthDate().errors().length) {
+            <mat-error>{{ form.birthDate().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            autocomplete="new-password"
+            [formField]="form.password"
+          />
+          <mat-hint>8 to 128 characters</mat-hint>
+          @if (form.password().touched() && form.password().errors().length) {
+            <mat-error>{{ form.password().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Repeat password</mat-label>
+          <input
+            matInput
+            type="password"
+            autocomplete="new-password"
+            [formField]="form.passwordConfirmation"
+          />
+          @if (
+            form.passwordConfirmation().touched() && form.passwordConfirmation().errors().length
+          ) {
+            <mat-error>{{ form.passwordConfirmation().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="full-width image-field">
+          <app-avatar
+            class="preview"
+            [name]="data().fullName || 'You'"
+            [image]="data().profileImage || null"
+            [size]="48"
+          />
+
+          <mat-form-field class="url-field">
+            <mat-label>Profile image URL</mat-label>
+            <input matInput type="url" [formField]="form.profileImage" />
+            <mat-hint>Paste the address of an image on the web</mat-hint>
+            @if (form.profileImage().touched() && form.profileImage().errors().length) {
+              <mat-error>{{ form.profileImage().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
+          <button matButton="filled" type="submit" [disabled]="submitting()">Create account</button>
+          <a matButton routerLink="/login">I already have an account</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,49 @@
+<div class="page">
+  <mat-card class="card">
+    <div class="window" aria-hidden="true">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="window-title">~/devconnect — login</span>
+    </div>
+
+    @if (submitting()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <mat-card-header>
+      <mat-card-title>Log in to DevConnect</mat-card-title>
+      <mat-card-subtitle>Use your credentials to access your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="form" novalidate (submit)="signIn(); $event.preventDefault()">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" autocomplete="email" [formField]="form.email" />
+          @if (form.email().touched() && form.email().errors().length) {
+            <mat-error>{{ form.email().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            autocomplete="current-password"
+            [formField]="form.password"
+          />
+          @if (form.password().touched() && form.password().errors().length) {
+            <mat-error>{{ form.password().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="actions">
+          <button matButton="filled" type="submit" [disabled]="submitting()">Log in</button>
+          <a matButton routerLink="/signup">Create account</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

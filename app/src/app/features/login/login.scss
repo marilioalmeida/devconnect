@@ -1,0 +1,59 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 26rem;
+  overflow: hidden;
+}
+
+.window {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface-container-high);
+}
+
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+}
+
+.red {
+  background-color: light-dark(hsl(5 75% 62%), hsl(5 65% 55%));
+}
+
+.yellow {
+  background-color: light-dark(hsl(45 85% 55%), hsl(45 75% 50%));
+}
+
+.green {
+  background-color: light-dark(hsl(130 55% 45%), hsl(130 50% 42%));
+}
+
+.window-title {
+  margin-left: 0.5rem;
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
