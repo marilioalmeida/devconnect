@@ -1,0 +1,74 @@
+<h1 class="title">Discover people</h1>
+
+<mat-card class="search-card">
+  <mat-card-content>
+    <form novalidate (submit)="$event.preventDefault()">
+      <mat-form-field class="field">
+        <mat-label>Search by name or email</mat-label>
+        <input matInput type="search" [formField]="form.search" />
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-hint>Type part of a name or email</mat-hint>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+@if (results.error()) {
+  <app-load-error
+    message="Could not load the search results."
+    (retry)="results.reload()"
+  />
+} @else {
+@if (results.isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+@let page = results.value();
+
+@for (profile of page.content; track profile.id) {
+  <mat-card class="row">
+    <mat-card-content class="row-content">
+      <app-user-row
+        [userId]="profile.id"
+        [name]="profile.fullName"
+        [nickname]="profile.nickname"
+        [image]="profile.profileImage"
+      >
+        @if (canRequest(profile)) {
+          <button
+            matButton="filled"
+            type="button"
+            [disabled]="requestingFor() !== null || results.isLoading()"
+            (click)="sendRequest(profile)"
+          >
+            <mat-icon>person_add</mat-icon>
+            Add
+          </button>
+        } @else {
+          <span class="badge">{{ badgeOf(profile) }}</span>
+        }
+      </app-user-row>
+    </mat-card-content>
+  </mat-card>
+} @empty {
+  @if (!results.isLoading()) {
+    <mat-card class="empty">
+      <mat-card-content class="empty-content">
+        <mat-icon class="empty-icon">person_search</mat-icon>
+        <p>No users found for this search.</p>
+        <p class="empty-detail">Try another part of the name or email.</p>
+      </mat-card-content>
+    </mat-card>
+  }
+}
+
+@if (page.page.totalElements > 0) {
+  <mat-paginator
+    [length]="page.page.totalElements"
+    [pageIndex]="page.page.number"
+    [pageSize]="page.page.size"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="changePage($event)"
+  />
+}
+}

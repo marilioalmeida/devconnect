@@ -67,6 +67,11 @@
           >
             <mat-icon matListItemIcon>{{ destination.icon }}</mat-icon>
             <span matListItemTitle>{{ destination.label }}</span>
+            @if (destination.route === '/home' && pendingRequests.total() > 0) {
+              <span matListItemMeta class="requests-badge">
+                {{ pendingRequests.total() }}
+              </span>
+            }
           </a>
         }
       </mat-nav-list>

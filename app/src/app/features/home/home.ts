@@ -18,6 +18,7 @@ import { Avatar } from '../../shared/avatar/avatar';
 import { PostContent } from '../../shared/post-content/post-content';
 import { LoadError } from '../../shared/load-error/load-error';
 import { PostCard } from '../../shared/post-card/post-card';
+import { FriendRequests } from './friend-requests/friend-requests';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -30,6 +31,7 @@ const DEFAULT_PAGE_SIZE = 10;
     PostContent,
     LoadError,
     PostCard,
+    FriendRequests,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
@@ -97,6 +99,10 @@ export class Home {
   protected changePage(event: PageEvent): void {
     this.size.set(event.pageSize);
     this.page.set(event.pageIndex);
+  }
+
+  protected onFriendshipAccepted(): void {
+    this.scrollToTop();
   }
 
   protected onRemoved(): void {

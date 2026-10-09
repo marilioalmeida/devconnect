@@ -1,0 +1,18 @@
+.card {
+  overflow: hidden;
+}
+
+.title {
+  font: var(--mat-sys-title-medium);
+}
+
+.request {
+  display: block;
+  padding: 0.5rem 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,49 @@
+@if (requests.error()) {
+  <app-load-error
+    message="Could not load friend requests."
+    (retry)="requests.reload()"
+  />
+} @else if (requests.isLoading() || requests.value().length > 0) {
+  <mat-card class="card">
+    @if (busy() || requests.isLoading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <mat-card-header>
+      <mat-card-title class="title">Friend requests</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @for (request of requests.value(); track request.id) {
+        <app-user-row
+          class="request"
+          [userId]="request.requester.id"
+          [name]="request.requester.fullName"
+          [nickname]="request.requester.nickname"
+          [image]="request.requester.profileImage"
+          [detail]="request.requestedAt | relativeTime"
+          [avatarSize]="40"
+        >
+          <div class="buttons">
+            <button
+              matButton="filled"
+              type="button"
+              [disabled]="busy() || requests.isLoading()"
+              (click)="accept(request.id, request.requester.fullName)"
+            >
+              Accept
+            </button>
+            <button
+              matButton
+              type="button"
+              [disabled]="busy() || requests.isLoading()"
+              (click)="decline(request.id, request.requester.fullName)"
+            >
+              Decline
+            </button>
+          </div>
+        </app-user-row>
+      }
+    </mat-card-content>
+  </mat-card>
+}

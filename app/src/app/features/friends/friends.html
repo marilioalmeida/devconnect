@@ -1,0 +1,73 @@
+<h1 class="title">My friends</h1>
+
+<mat-card class="search-card">
+  <mat-card-content>
+    <form novalidate (submit)="$event.preventDefault()">
+      <mat-form-field class="field">
+        <mat-label>Filter by name or email</mat-label>
+        <input matInput type="search" [formField]="form.search" />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+@if (friends.error()) {
+  <app-load-error
+    message="Could not load your friends."
+    (retry)="friends.reload()"
+  />
+} @else {
+@if (friends.isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+@let page = friends.value();
+
+@for (relationship of page.content; track relationship.id) {
+  <mat-card class="row">
+    <mat-card-content class="row-content">
+      <app-user-row
+        [userId]="relationship.friend.id"
+        [name]="relationship.friend.fullName"
+        [nickname]="relationship.friend.nickname"
+        [image]="relationship.friend.profileImage"
+        [detail]="'Friends since ' + (relationship.friendsSince | date: 'MMM d, y')"
+      >
+        <button
+          matButton
+          type="button"
+          [disabled]="undoing() !== null || friends.isLoading()"
+          (click)="undo(relationship)"
+        >
+          <mat-icon>person_remove</mat-icon>
+          Remove
+        </button>
+      </app-user-row>
+    </mat-card-content>
+  </mat-card>
+} @empty {
+  @if (!friends.isLoading()) {
+    <mat-card class="empty">
+      <mat-card-content class="empty-content">
+        <mat-icon class="empty-icon">group</mat-icon>
+        <p><strong>You don't have any friends here yet.</strong></p>
+        <p class="empty-detail">
+          Find people by name or email and send them a friend request.
+        </p>
+        <a matButton="filled" routerLink="/discover">Discover people</a>
+      </mat-card-content>
+    </mat-card>
+  }
+}
+
+@if (page.page.totalElements > 0) {
+  <mat-paginator
+    [length]="page.page.totalElements"
+    [pageIndex]="page.page.number"
+    [pageSize]="page.page.size"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="changePage($event)"
+  />
+}
+}
