@@ -1,0 +1,91 @@
+.section {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.form {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.avatar-form {
+  margin-top: 0.5rem;
+}
+
+.field {
+  flex: 1 1 16rem;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+}
+
+.avatar-link {
+  display: inline-flex;
+  line-height: 0;
+  margin-top: 0.15rem;
+}
+
+.body {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font: var(--mat-sys-label-medium);
+}
+
+.author {
+  color: var(--mat-sys-on-surface);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.author:hover {
+  text-decoration: underline;
+  color: var(--mat-sys-primary);
+}
+
+.date {
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.row {
+  width: 100%;
+}
+
+.delete {
+  margin-left: auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.delete mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.text {
+  margin: 0.15rem 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0.5rem 0;
+}

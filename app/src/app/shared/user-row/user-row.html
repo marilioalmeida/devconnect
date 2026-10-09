@@ -1,0 +1,24 @@
+<div class="row">
+  <a
+    class="avatar-link"
+    [routerLink]="['/profile', userId()]"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <app-avatar [name]="name()" [image]="image()" [size]="avatarSize()" />
+  </a>
+
+  <div class="identity">
+    <a class="name" [routerLink]="['/profile', userId()]">{{ name() }}</a>
+    @if (nickname()) {
+      <span class="nickname">~{{ nickname() }}</span>
+    }
+    @if (detail()) {
+      <span class="detail">{{ detail() }}</span>
+    }
+  </div>
+
+  <div class="actions">
+    <ng-content />
+  </div>
+</div>

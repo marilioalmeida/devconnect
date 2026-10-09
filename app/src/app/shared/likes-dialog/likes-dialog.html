@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Liked by</h2>
+
+<mat-dialog-content class="content">
+  @if (likes.error()) {
+    <app-load-error
+      message="Could not load likes."
+      (retry)="likes.reload()"
+    />
+  } @else {
+    @if (likes.isLoading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    @let page = likes.value();
+
+    @for (user of page.content; track user.id) {
+      <app-user-row
+        class="like-row"
+        [userId]="user.id"
+        [name]="user.fullName"
+        [nickname]="user.nickname"
+        [image]="user.profileImage"
+        [avatarSize]="36"
+      />
+    } @empty {
+      @if (!likes.isLoading()) {
+        <p class="empty">No likes yet.</p>
+      }
+    }
+
+    @if (hasMore()) {
+      <button matButton type="button" (click)="loadMore()">
+        <mat-icon>expand_more</mat-icon>
+        Load more
+      </button>
+    }
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton type="button" mat-dialog-close>Close</button>
+</mat-dialog-actions>

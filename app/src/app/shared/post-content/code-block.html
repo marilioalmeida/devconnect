@@ -1,0 +1,19 @@
+<div class="block">
+  <div class="header">
+    <span class="language">{{ language() || 'code' }}</span>
+
+    @if (canCopy) {
+      <button
+        matIconButton
+        type="button"
+        class="copy"
+        [attr.aria-label]="copied() ? 'Code copied' : 'Copy code'"
+        (click)="copy()"
+      >
+        <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+      </button>
+    }
+  </div>
+
+  <pre class="body"><code>@if (highlighted(); as html) {<span [innerHTML]="html"></span>} @else {{{ code() }}}</code></pre>
+</div>

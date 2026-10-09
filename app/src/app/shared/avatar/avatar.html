@@ -1,0 +1,21 @@
+@if (showImage()) {
+  <img
+    class="photo"
+    [src]="image()"
+    [alt]="name()"
+    [style.width.px]="size()"
+    [style.height.px]="size()"
+    (error)="unavailable.set(true)"
+  />
+} @else {
+  <span
+    class="initials"
+    aria-hidden="true"
+    [style.width.px]="size()"
+    [style.height.px]="size()"
+    [style.font-size.px]="size() * 0.38"
+    [style.--hue]="hue()"
+  >
+    {{ initials() }}
+  </span>
+}

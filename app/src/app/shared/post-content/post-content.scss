@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.text {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.text + .text,
+.text + app-code-block,
+app-code-block + .text,
+app-code-block + app-code-block {
+  margin-top: 0.75rem;
+}
+
+.inline {
+  font-family: var(--mono-font);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 0.25rem;
+  background-color: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-tertiary);
+}
+
+.link {
+  color: var(--mat-sys-primary);
+  overflow-wrap: anywhere;
+}
