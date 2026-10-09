@@ -1,5 +1,6 @@
 package com.devconnect.api.friendship.repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,16 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 	Optional<Friendship> findBetween(
 		@Param("userId") Long userId,
 		@Param("otherUserId") Long otherUserId);
+
+	@Query("""
+		select f
+		from Friendship f
+		where (f.requester.id = :userId and f.recipient.id in :otherIds)
+		   or (f.recipient.id = :userId and f.requester.id in :otherIds)
+		""")
+	List<Friendship> findAllBetween(
+		@Param("userId") Long userId,
+		@Param("otherIds") Collection<Long> otherIds);
 
 	@Query("""
 		select f

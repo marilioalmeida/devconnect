@@ -1,6 +1,7 @@
 package com.devconnect.api.friendship.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -9,7 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import com.devconnect.api.friendship.controller.response.FriendResponse;
 import com.devconnect.api.friendship.controller.response.FriendshipResponse;
+import com.devconnect.api.friendship.controller.response.RelationshipStatus;
 import com.devconnect.api.friendship.controller.response.FriendRequestResponse;
+import com.devconnect.api.friendship.controller.response.RelationshipResponse;
 import com.devconnect.api.friendship.domain.Friendship;
 import com.devconnect.api.friendship.domain.FriendshipStatus;
 import com.devconnect.api.factories.FriendshipFactory;
@@ -98,5 +101,51 @@ class FriendshipMapperTest {
 		FriendResponse response = FriendshipMapper.toFriendResponse(friendship, FriendshipFactory.RECIPIENT_ID);
 
 		assertEquals(FriendshipFactory.REQUESTER_ID, response.getFriend().getId());
+	}
+
+	@Test
+	@DisplayName("Should map accepted friendship to friends relationship")
+	void shouldMapAcceptedFriendshipToFriendsRelationship() {
+
+		Friendship friendship = FriendshipFactory.getAccepted();
+
+		RelationshipResponse response = FriendshipMapper.toRelationshipResponse(friendship, FriendshipFactory.REQUESTER_ID);
+
+		assertEquals(RelationshipStatus.FRIENDS, response.getStatus());
+		assertEquals(FriendshipFactory.FRIENDSHIP_ID, response.getFriendshipId());
+	}
+
+	@Test
+	@DisplayName("Should map pending to request sent for requester")
+	void shouldMapPendingToRequestSentForRequester() {
+
+		Friendship friendship = FriendshipFactory.getPending();
+
+		RelationshipResponse response = FriendshipMapper.toRelationshipResponse(friendship, FriendshipFactory.REQUESTER_ID);
+
+		assertEquals(RelationshipStatus.REQUEST_SENT, response.getStatus());
+		assertEquals(FriendshipFactory.FRIENDSHIP_ID, response.getFriendshipId());
+	}
+
+	@Test
+	@DisplayName("Should map pending to request received for recipient")
+	void shouldMapPendingToRequestReceivedForRecipient() {
+
+		Friendship friendship = FriendshipFactory.getPending();
+
+		RelationshipResponse response = FriendshipMapper.toRelationshipResponse(friendship, FriendshipFactory.RECIPIENT_ID);
+
+		assertEquals(RelationshipStatus.REQUEST_RECEIVED, response.getStatus());
+	}
+
+	@Test
+	@DisplayName("Should return none when friendship is null")
+	void shouldReturnNoneWhenFriendshipIsNull() {
+
+		RelationshipResponse response = FriendshipMapper.toRelationshipResponse(null, FriendshipFactory.REQUESTER_ID);
+
+		assertNotNull(response);
+		assertEquals(RelationshipStatus.NONE, response.getStatus());
+		assertNull(response.getFriendshipId());
 	}
 }

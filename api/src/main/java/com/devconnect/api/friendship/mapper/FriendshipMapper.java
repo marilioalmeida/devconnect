@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 
 import com.devconnect.api.friendship.controller.response.FriendResponse;
 import com.devconnect.api.friendship.controller.response.FriendshipResponse;
+import com.devconnect.api.friendship.controller.response.RelationshipStatus;
 import com.devconnect.api.friendship.controller.response.FriendRequestResponse;
+import com.devconnect.api.friendship.controller.response.RelationshipResponse;
 import com.devconnect.api.friendship.domain.Friendship;
 import com.devconnect.api.friendship.domain.FriendshipStatus;
 import com.devconnect.api.user.domain.User;
@@ -50,10 +52,33 @@ public class FriendshipMapper {
 			.build();
 	}
 
+	public RelationshipResponse toRelationshipResponse(Friendship friendship, Long authenticatedUserId) {
+		if (friendship == null) {
+			return RelationshipResponse.builder()
+				.status(RelationshipStatus.NONE)
+				.build();
+		}
+
+		return RelationshipResponse.builder()
+			.status(resolveStatus(friendship, authenticatedUserId))
+			.friendshipId(friendship.getId())
+			.build();
+	}
+
 	private User getOtherParticipant(Friendship friendship, Long authenticatedUserId) {
 		return friendship.getRequester().getId().equals(authenticatedUserId)
 			? friendship.getRecipient()
 			: friendship.getRequester();
+	}
+
+	private RelationshipStatus resolveStatus(Friendship friendship, Long authenticatedUserId) {
+		if (FriendshipStatus.ACCEPTED.equals(friendship.getStatus())) {
+			return RelationshipStatus.FRIENDS;
+		}
+
+		return friendship.getRequester().getId().equals(authenticatedUserId)
+			? RelationshipStatus.REQUEST_SENT
+			: RelationshipStatus.REQUEST_RECEIVED;
 	}
 
 }
