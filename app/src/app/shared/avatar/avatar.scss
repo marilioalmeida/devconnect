@@ -1,0 +1,24 @@
+:host {
+  display: inline-flex;
+  flex: none;
+  line-height: 0;
+}
+
+.photo {
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--mono-font);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  user-select: none;
+  background-color: light-dark(hsl(var(--hue) 45% 86%), hsl(var(--hue) 30% 30%));
+  color: light-dark(hsl(var(--hue) 60% 26%), hsl(var(--hue) 45% 88%));
+}

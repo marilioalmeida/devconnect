@@ -1,0 +1,146 @@
+@let post = current();
+
+<mat-card class="card" [class.busy]="busy()">
+  <mat-card-header>
+    <a
+      mat-card-avatar
+      class="avatar-link"
+      [routerLink]="['/profile', post.author.id]"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <app-avatar [name]="post.author.fullName" [image]="post.author.profileImage" [size]="40" />
+    </a>
+
+    <mat-card-title>
+      <a class="author" [routerLink]="['/profile', post.author.id]">{{ post.author.fullName }}</a>
+    </mat-card-title>
+
+    <mat-card-subtitle class="meta">
+      @if (post.author.nickname) {
+        <span class="nickname">~{{ post.author.nickname }}</span>
+        <span class="separator" aria-hidden="true">·</span>
+      }
+      <span class="when" [title]="post.createdAt | date: 'MMM d, y, h:mm a'">
+        {{ post.createdAt | relativeTime }}
+      </span>
+    </mat-card-subtitle>
+
+    <div class="header-actions">
+      <span class="badge" [class.private-badge]="!isPublic()">
+        <mat-icon class="badge-icon">{{ isPublic() ? 'public' : 'lock' }}</mat-icon>
+        {{ isPublic() ? 'public' : 'private' }}
+      </span>
+
+      @if (isOwnPost()) {
+        <button
+          matIconButton
+          type="button"
+          aria-label="Post actions"
+          [disabled]="busy()"
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu>
+          <button mat-menu-item type="button" (click)="startEdit()">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item type="button" (click)="toggleVisibility()">
+            <mat-icon>{{ isPublic() ? 'lock' : 'public' }}</mat-icon>
+            <span>{{ isPublic() ? 'Make private' : 'Make public' }}</span>
+          </button>
+          <button mat-menu-item type="button" (click)="remove()">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      }
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (editing()) {
+      <div class="edit">
+        <mat-form-field class="edit-field">
+          <mat-label>Post content</mat-label>
+          <textarea
+            matInput
+            rows="4"
+            [value]="draft()"
+            (input)="draft.set(editField.value)"
+            (keydown.control.enter)="saveEdit()"
+            #editField
+          ></textarea>
+          <mat-hint align="end">{{ draft().length }}/5000</mat-hint>
+        </mat-form-field>
+
+        <div class="edit-actions">
+          <button
+            matButton="filled"
+            type="button"
+            [disabled]="busy() || !draft().trim()"
+            (click)="saveEdit()"
+          >
+            Save
+          </button>
+          <button matButton type="button" [disabled]="busy()" (click)="cancelEdit()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    } @else {
+      <app-post-content [content]="post.content" />
+    }
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button
+      matIconButton
+      type="button"
+      class="action"
+      [class.liked]="post.likedByCurrentUser"
+      [class.pulse]="pulse()"
+      [disabled]="liking()"
+      [attr.aria-pressed]="post.likedByCurrentUser"
+      [attr.aria-label]="post.likedByCurrentUser ? 'Unlike' : 'Like'"
+      (click)="toggleLike()"
+    >
+      <mat-icon>{{ post.likedByCurrentUser ? 'favorite' : 'favorite_border' }}</mat-icon>
+    </button>
+
+    <button
+      matButton
+      type="button"
+      class="action like-count"
+      aria-label="See who liked this"
+      (click)="openLikes()"
+    >
+      <span class="count">{{ post.likeCount }}</span>
+    </button>
+
+    <button
+      matButton
+      type="button"
+      class="action"
+      [attr.aria-expanded]="commentsOpen()"
+      (click)="toggleComments()"
+    >
+      <mat-icon>chat_bubble_outline</mat-icon>
+      <span class="count">{{ post.commentCount }}</span>
+    </button>
+  </mat-card-actions>
+
+  @if (commentsOpen()) {
+    <mat-card-content>
+      <app-post-comments
+        [postId]="post.id"
+        [postAuthorId]="post.author.id"
+        (commentCreated)="onCommentCreated()"
+        (commentRemoved)="onCommentRemoved()"
+      />
+    </mat-card-content>
+  }
+</mat-card>

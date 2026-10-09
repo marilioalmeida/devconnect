@@ -1,0 +1,13 @@
+.content {
+  min-width: min(22rem, 80vw);
+}
+
+.like-row {
+  display: block;
+  padding: 0.4rem 0;
+}
+
+.empty {
+  margin: 0.5rem 0;
+  color: var(--mat-sys-on-surface-variant);
+}

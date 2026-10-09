@@ -1,0 +1,7 @@
+<mat-card class="card">
+  <mat-card-content class="content">
+    <mat-icon class="icon">cloud_off</mat-icon>
+    <p class="message">{{ message() }}</p>
+    <button matButton="filled" type="button" (click)="retry.emit()">Try again</button>
+  </mat-card-content>
+</mat-card>
