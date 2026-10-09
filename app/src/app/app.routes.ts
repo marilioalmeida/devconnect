@@ -33,6 +33,19 @@ export const routes: Routes = [
     canActivate: [authenticatedGuard],
     loadComponent: () => import('./features/friends/friends').then((m) => m.Friends),
   },
+  {
+    path: 'edit-profile',
+    title: 'My profile | DevConnect',
+    canActivate: [authenticatedGuard],
+    loadComponent: () =>
+      import('./features/edit-profile/edit-profile').then((m) => m.EditProfile),
+  },
+  {
+    path: 'profile/:id',
+    title: 'Profile | DevConnect',
+    canActivate: [authenticatedGuard],
+    loadComponent: () => import('./features/profile/profile').then((m) => m.ProfilePage),
+  },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', redirectTo: 'home' },
 ];

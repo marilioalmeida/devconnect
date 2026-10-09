@@ -24,6 +24,7 @@ const DESTINATIONS: Destination[] = [
   { route: '/home', label: 'Feed', icon: 'dynamic_feed' },
   { route: '/discover', label: 'Discover people', icon: 'person_search' },
   { route: '/friends', label: 'My friends', icon: 'group' },
+  { route: '/edit-profile', label: 'My profile', icon: 'account_circle' },
 ];
 
 @Component({

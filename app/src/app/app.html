@@ -38,6 +38,10 @@
           <span class="account-nickname">~{{ loggedIn.nickname }}</span>
         }
       </div>
+      <a mat-menu-item routerLink="/edit-profile">
+        <mat-icon>person</mat-icon>
+        <span>My profile</span>
+      </a>
       <button mat-menu-item type="button" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Log out</span>

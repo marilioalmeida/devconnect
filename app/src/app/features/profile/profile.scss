@@ -1,0 +1,143 @@
+.header {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.cover {
+  height: 6.5rem;
+  background: linear-gradient(
+    120deg,
+    light-dark(hsl(var(--hue) 50% 78%), hsl(var(--hue) 40% 28%)),
+    light-dark(hsl(calc(var(--hue) + 45) 55% 68%), hsl(calc(var(--hue) + 45) 45% 22%))
+  );
+}
+
+.cover-neutral {
+  background: var(--mat-sys-surface-container-high);
+}
+
+.body {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 0 1.25rem;
+}
+
+.photo {
+  margin-top: -2.5rem;
+  border: 3px solid var(--mat-sys-surface-container-low);
+  border-radius: 50%;
+  background-color: var(--mat-sys-surface-container-low);
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  min-width: 0;
+}
+
+.name {
+  font: var(--mat-sys-title-large);
+  margin: 0;
+}
+
+.nickname {
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  color: var(--mat-sys-primary);
+}
+
+.post-count {
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin-top: 0.25rem;
+}
+
+.actions {
+  padding: 0.5rem 1rem 1rem;
+  gap: 0.5rem;
+}
+
+.friends-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.badge-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--mat-sys-outline);
+}
+
+.empty-content p {
+  margin: 0;
+}
+
+.note {
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-medium);
+}
+
+.loading {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.photo-loading {
+  width: 80px;
+  height: 80px;
+  margin-top: -2.5rem;
+  border-radius: 50%;
+  border: 3px solid var(--mat-sys-surface-container-low);
+  background-color: var(--mat-sys-surface-container-high);
+  flex: none;
+}
+
+.loading-bar {
+  height: 0.9rem;
+  width: 8rem;
+  border-radius: 0.25rem;
+  background-color: var(--mat-sys-surface-container-high);
+  margin-bottom: 0.4rem;
+}
+
+.wide {
+  width: 12rem;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading {
+    animation: none;
+  }
+}

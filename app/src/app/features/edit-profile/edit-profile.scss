@@ -1,0 +1,45 @@
+.title {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 1rem;
+}
+
+.card {
+  max-width: 34rem;
+  overflow: hidden;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.preview-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.preview-nickname {
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  color: var(--mat-sys-primary);
+}
+
+.preview-note {
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-on-surface-variant);
+  margin-top: 0.25rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+}
+
+.actions {
+  margin-top: 0.5rem;
+}
