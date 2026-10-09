@@ -42,5 +42,7 @@ logging:
     org.flywaydb.core: info
 
 api:
+  jwt:
+    expiration-seconds: 3600
   cors:
     allowed-origins: http://localhost:4200
