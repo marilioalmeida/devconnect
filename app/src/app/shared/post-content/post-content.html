@@ -1,0 +1,23 @@
+@for (part of parts(); track $index) {
+  @if (part.type === 'text') {
+    <p class="text">
+      @for (chunk of part.chunks; track $index) {
+        @switch (chunk.type) {
+          @case ('inline-code') {
+            <code class="inline">{{ chunk.value }}</code>
+          }
+          @case ('link') {
+            <a class="link" [href]="chunk.value" target="_blank" rel="noopener noreferrer">
+              {{ chunk.value }}
+            </a>
+          }
+          @default {
+            {{ chunk.value }}
+          }
+        }
+      }
+    </p>
+  } @else {
+    <app-code-block [code]="part.value" [language]="part.language" />
+  }
+}
