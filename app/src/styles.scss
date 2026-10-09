@@ -1,0 +1,102 @@
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$spring-green-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  --mono-font: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.notification-success {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--mat-sys-primary),
+      supporting-text-color: var(--mat-sys-on-primary),
+      button-color: var(--mat-sys-on-primary),
+    )
+  );
+}
+
+.notification-error {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--mat-sys-error),
+      supporting-text-color: var(--mat-sys-on-error),
+      button-color: var(--mat-sys-on-error),
+    )
+  );
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-meta {
+  color: light-dark(hsl(150 10% 45%), hsl(150 8% 58%));
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type {
+  color: light-dark(hsl(270 55% 48%), hsl(270 70% 78%));
+}
+
+.hljs-string,
+.hljs-addition {
+  color: light-dark(hsl(140 60% 28%), hsl(135 50% 68%));
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-deletion {
+  color: light-dark(hsl(25 80% 40%), hsl(30 90% 70%));
+}
+
+.hljs-title,
+.hljs-name,
+.hljs-section,
+.hljs-built_in {
+  color: light-dark(hsl(210 70% 40%), hsl(205 85% 72%));
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: light-dark(hsl(190 65% 30%), hsl(185 55% 65%));
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
