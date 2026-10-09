@@ -42,12 +42,41 @@
   flex: 1 1 auto;
 }
 
+.account-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.25rem;
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem 0.5rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  margin-bottom: 0.5rem;
+}
+
+.account-name {
+  font: var(--mat-sys-label-large);
+}
+
+.account-nickname {
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.container {
+  flex: 1 1 auto;
+  background-color: var(--mat-sys-surface);
+}
 
 
-
-
-
-
+.drawer {
+  width: 15rem;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+}
 
 .content {
   display: block;

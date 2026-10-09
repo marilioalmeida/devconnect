@@ -1,0 +1,129 @@
+@let profile = user();
+
+<div class="panel">
+  <aside class="side-column">
+    @if (profile) {
+      <mat-card class="mini-profile">
+        <mat-card-content class="mini-content">
+          <app-avatar [name]="profile.fullName" [image]="profile.profileImage" [size]="56" />
+          <strong class="mini-name">{{ profile.fullName }}</strong>
+          @if (profile.nickname) {
+            <span class="mini-nickname">~{{ profile.nickname }}</span>
+          }
+          <span class="mini-email">{{ profile.email }}</span>
+          <a matButton routerLink="/edit-profile">Edit profile</a>
+        </mat-card-content>
+      </mat-card>
+    }
+  </aside>
+
+  <div class="feed-column">
+    <mat-card class="composer-card">
+      @if (publishing()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
+
+      <mat-card-content>
+        <form class="composer" novalidate (submit)="publish(); $event.preventDefault()">
+          @if (profile) {
+            <app-avatar
+              class="composer-avatar"
+              [name]="profile.fullName"
+              [image]="profile.profileImage"
+              [size]="44"
+            />
+          }
+
+          <div class="composer-fields">
+            <mat-form-field class="full-width">
+              <mat-label>What's on your mind?</mat-label>
+              <textarea
+                matInput
+                rows="3"
+                [formField]="form.content"
+                (keydown.control.enter)="publish()"
+                (keydown.meta.enter)="publish()"
+              ></textarea>
+              <mat-hint>Tip: ```java opens a code block and `backticks` mark inline code</mat-hint>
+              <mat-hint align="end">{{ newPost().content.length }}/5000</mat-hint>
+              @if (form.content().touched() && form.content().errors().length) {
+                <mat-error>{{ form.content().errors()[0].message }}</mat-error>
+              }
+            </mat-form-field>
+
+            @if (previewing() && newPost().content.trim()) {
+              <div class="post-preview">
+                <span class="preview-label">preview</span>
+                <app-post-content [content]="newPost().content" />
+              </div>
+            }
+
+            <div class="actions-row">
+              <mat-form-field class="visibility-field">
+                <mat-label>Who can see it</mat-label>
+                <mat-select [formField]="form.visibility">
+                  <mat-option value="PUBLIC">Public</mat-option>
+                  <mat-option value="PRIVATE">Private — friends only</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <button
+                matButton
+                type="button"
+                [attr.aria-pressed]="previewing()"
+                (click)="previewing.set(!previewing())"
+              >
+                {{ previewing() ? 'Hide preview' : 'Preview' }}
+              </button>
+
+              <button matButton="filled" type="submit" [disabled]="publishing()">Publish</button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <section class="feed" aria-label="Feed">
+      @if (feed.error()) {
+        <app-load-error
+          message="Could not load the feed."
+          (retry)="feed.reload()"
+        />
+      } @else {
+      @if (feed.isLoading()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
+
+      @let page = feed.value();
+
+      @for (post of page.content; track post.id) {
+        <app-post-card [post]="post" (removed)="onRemoved()" />
+      } @empty {
+        @if (!feed.isLoading()) {
+          <mat-card class="empty">
+            <mat-card-content class="empty-content">
+              <mat-icon class="empty-icon">dynamic_feed</mat-icon>
+              <p><strong>Your feed is empty.</strong></p>
+              <p class="empty-detail">
+                The feed brings together your posts and those of people you are friends with.
+                Publish something above or find people to keep the conversation going.
+              </p>
+              <a matButton="filled" routerLink="/discover">Discover people</a>
+            </mat-card-content>
+          </mat-card>
+        }
+      }
+
+      @if (page.page.totalElements > 0) {
+        <mat-paginator
+          [length]="page.page.totalElements"
+          [pageIndex]="page.page.number"
+          [pageSize]="page.page.size"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="changePage($event)"
+        />
+      }
+      }
+    </section>
+  </div>
+</div>

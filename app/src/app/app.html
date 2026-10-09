@@ -1,4 +1,12 @@
+@let loggedIn = user();
+
 <mat-toolbar class="top-bar">
+  @if (loggedIn && mode() === 'over') {
+    <button matIconButton type="button" aria-label="Open menu" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+
   <span class="brand">DevConnect<span class="cursor" aria-hidden="true">_</span></span>
 
   <span class="spacer"></span>
@@ -11,8 +19,63 @@
   >
     <mat-icon>{{ theme.dark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
+
+  @if (loggedIn) {
+    <button
+      matIconButton
+      type="button"
+      class="account-button"
+      aria-label="Open account menu"
+      [matMenuTriggerFor]="accountMenu"
+    >
+      <app-avatar [name]="loggedIn.fullName" [image]="loggedIn.profileImage" [size]="32" />
+    </button>
+
+    <mat-menu #accountMenu>
+      <div class="account">
+        <span class="account-name">{{ loggedIn.fullName }}</span>
+        @if (loggedIn.nickname) {
+          <span class="account-nickname">~{{ loggedIn.nickname }}</span>
+        }
+      </div>
+      <button mat-menu-item type="button" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Log out</span>
+      </button>
+    </mat-menu>
+  }
 </mat-toolbar>
 
-<main class="content">
-  <router-outlet />
-</main>
+<mat-sidenav-container class="container">
+  <mat-sidenav
+    #drawer
+    class="drawer"
+    [mode]="mode()"
+    [opened]="opened()"
+    [disableClose]="mode() === 'side'"
+  >
+    @if (loggedIn) {
+      <mat-nav-list>
+        @for (destination of destinations; track destination.route) {
+          <a
+            mat-list-item
+            [routerLink]="destination.route"
+            routerLinkActive
+            #active="routerLinkActive"
+            [activated]="active.isActive"
+            (click)="onNavigate(drawer)"
+          >
+            <mat-icon matListItemIcon>{{ destination.icon }}</mat-icon>
+            <span matListItemTitle>{{ destination.label }}</span>
+          </a>
+        }
+      </mat-nav-list>
+    }
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <main class="content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
