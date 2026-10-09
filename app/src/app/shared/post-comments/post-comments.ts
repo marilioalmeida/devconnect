@@ -96,7 +96,7 @@ export class PostComments {
         return;
       }
 
-      this.draft.set({ content: '' });
+      this.form().reset({ content: '' });
       this.comments.reload();
       this.commentCreated.emit();
     });
