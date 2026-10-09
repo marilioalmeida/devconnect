@@ -90,7 +90,7 @@ export class Home {
         return;
       }
 
-      this.newPost.set({ content: '', visibility: draft.visibility });
+      this.form().reset({ content: '', visibility: draft.visibility });
       this.notifier.success('Post published');
       this.scrollToTop();
     });
