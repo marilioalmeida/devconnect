@@ -2,6 +2,7 @@ package com.devconnect.api.factories;
 
 import java.time.LocalDate;
 
+import com.devconnect.api.user.controller.request.UpdateProfileRequest;
 import com.devconnect.api.user.controller.request.UserRequest;
 import com.devconnect.api.user.domain.Role;
 import com.devconnect.api.user.domain.User;
@@ -54,6 +55,20 @@ public class UserFactory {
 		request.setEmail("test@devconnect.com");
 		request.setBirthDate(LocalDate.of(1995, 3, 15));
 		request.setPassword("securePassword123");
+		return request;
+	}
+
+	public static UpdateProfileRequest getUpdateProfileRequest() {
+		UpdateProfileRequest request = new UpdateProfileRequest();
+		request.setFullName("Updated Name");
+		request.setNickname("updated");
+		request.setProfileImage("https://cdn.devconnect.com/profile/updated.png");
+		return request;
+	}
+
+	public static UpdateProfileRequest getUpdateProfileRequestWithoutOptionalData() {
+		UpdateProfileRequest request = new UpdateProfileRequest();
+		request.setFullName("Updated Name");
 		return request;
 	}
 }
