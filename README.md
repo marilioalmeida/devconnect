@@ -1,5 +1,7 @@
 # DevConnect
 
+[![CI](https://github.com/marilioalmeida/devconnect/actions/workflows/ci.yml/badge.svg)](https://github.com/marilioalmeida/devconnect/actions/workflows/ci.yml)
+
 A social network for developers: a place to share what you're learning, follow the progress of the people you know and talk about code without the noise of general-purpose networks.
 
 I'm learning Java and Spring Boot, and I built DevConnect to put what I'm studying into practice in a complete project: a REST API, a relational database with versioned migrations, token-based authentication, unit and integration tests, and a real frontend consuming it all.
