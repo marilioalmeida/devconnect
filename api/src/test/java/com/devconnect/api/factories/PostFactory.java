@@ -3,6 +3,7 @@ package com.devconnect.api.factories;
 import java.time.LocalDateTime;
 
 import com.devconnect.api.post.controller.request.UpdatePostVisibilityRequest;
+import com.devconnect.api.post.controller.request.UpdatePostContentRequest;
 import com.devconnect.api.post.controller.request.PostRequest;
 import com.devconnect.api.post.domain.Post;
 import com.devconnect.api.post.domain.Visibility;
@@ -49,6 +50,12 @@ public class PostFactory {
 
 	public static Post getNew() {
 		return getBuilder().id(null).build();
+	}
+
+	public static UpdatePostContentRequest getUpdateContentRequest(String content) {
+		UpdatePostContentRequest request = new UpdatePostContentRequest();
+		request.setContent(content);
+		return request;
 	}
 
 	public static PostRequest getRequest() {
